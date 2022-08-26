@@ -1,0 +1,25 @@
+body{
+    font-family: poppins, sans-serif;
+    background-color: rgb(39, 58, 92);
+    color: rgb(129, 224, 253);
+}
+section{
+    height: 150px;
+    width: 250px;
+    display: flex;
+    justify-content: center;
+}
+h1{
+    font-size: 10vh;
+    text-align: center;
+}
+
+.white{
+    height: 150px;
+    width: 50px
+}
+
+.black{
+    height: 80px;
+    width: 40px;
+}
