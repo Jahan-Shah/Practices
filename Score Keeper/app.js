@@ -1,45 +1,48 @@
-const buttonP1 = document.querySelector('#p1Button');
-const buttonP2 = document.querySelector('#p2Button');
-
-const p1Display = document.querySelector('#p1Display')
-const p2Display = document.querySelector('#p2Display')
+const p1 = {
+    score: 0,
+    button: document.querySelector('#p1Button'),
+    display: document.querySelector('#p1Display')
+}
+const p2 = {
+    score: 0,
+    button: document.querySelector('#p2Button'),
+    display: document.querySelector('#p2Display')
+}
 
 const resetScore = document.querySelector('#reset');
-
 const winningScoreSelect = document.querySelector('#toWin');
 
-let p1Score = 0;
-let p2Score = 0;
-let isGameOver = false;
 let winningScore = 3;
 
-
-buttonP1.addEventListener('click', function(){
-    if (!isGameOver) {
-        p1Score+=1;
-        if(p1Score === winningScore){
+function pingpongScore(player, opponent){
+        player.score+=1;
+        if(player.score === winningScore){
             isGameOver = true;
-            p1Display.classList.add('has-text-success');
-            p2Display.classList.add('has-text-danger');
-            buttonP1.disabled = true;
-            buttonP2.disabled = true;
+            player.display.classList.add('has-text-success');
+            opponent.display.classList.add('has-text-danger');
+            player.button.disabled = true;
+            opponent.button.disabled = true;
         }
-        p1Display.textContent = p1Score;
+        player.display.textContent = player.score;
     }
+
+function winByTwo(player, opponent){
+    if(player.score === opponent.score && player.score === winningScore-1){
+        winningScore++;
+        winningScoreSelect.classList.add('overtime');
+        winningScoreSelect.selectedOptions[0].value === winningScore;
+        winningScoreSelect.selectedOptions[0].innerText = `Tie BREAK to ${winningScore}`;
+    }
+}
+
+p1.button.addEventListener('click', function(){
+    pingpongScore(p1, p2)
+    winByTwo(p1, p2)
 })
 
-buttonP2.addEventListener('click', function(){
-    if (!isGameOver) {
-        p2Score+=1;
-        if(p2Score === winningScore){
-            isGameOver = true;
-            p2Display.classList.add('has-text-success');
-            p1Display.classList.add('has-text-danger');
-            buttonP1.disabled = true;
-            buttonP2.disabled = true;
-        }
-    p2Display.textContent = p2Score;
-    }
+p2.button.addEventListener('click', function(){
+    pingpongScore(p2, p1)
+    winByTwo(p2, p1)
 })
 
 winningScoreSelect.addEventListener('change', function(){
@@ -50,14 +53,16 @@ winningScoreSelect.addEventListener('change', function(){
 resetScore.addEventListener('click', reset)
 
 function reset(){
-    p1Score = 0;
-    p2Score = 0;
-    p1Display.textContent = '0';
-    p2Display.textContent = '0';
-    isGameOver = false;
-    p1Display.classList.remove('has-text-success', 'has-text-danger');
-    p2Display.classList.remove('has-text-success', 'has-text-danger');
-    buttonP1.disabled = false;
-    buttonP2.disabled = false;
-
+    for(let p of [p1, p2]){
+        p.score = 0;
+        p.display.textContent = '0';
+        p.display.classList.remove('has-text-success', 'has-text-danger');
+        p.button.disabled = false;
+    }
+    for(let i=0; i<5; i++){
+            winningScoreSelect[i].value = i+3+i;
+            winningScoreSelect[i].innerText = i+3+i;
+    }
+    winningScore = parseInt(winningScoreSelect.value);
+    winningScoreSelect.classList.remove('overtime');
 }
