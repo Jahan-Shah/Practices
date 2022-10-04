@@ -1,6 +1,6 @@
 let maxNum = prompt("Enter a maximum number for game: ");
 if (maxNum.toLowerCase() === 'q'){
-    return;
+    exit(0)
     }
     maxNum = parseInt(maxNum);
 
@@ -8,7 +8,7 @@ while (!maxNum){
     maxNum = prompt("Enter a valid maximum number for game!!: ");
 
     if (maxNum.toLowerCase() === 'q'){
-        return;
+        exit(0)
     }
     maxNum = parseInt(maxNum);
 }
