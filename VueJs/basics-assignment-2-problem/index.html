@@ -18,12 +18,12 @@
     </header>
     <section id="assignment">
       <h2>Event Practice</h2>
-      <button @click="showAlert" >Show Alert</button>
+      <button @click="showAlert">Show Alert</button>
       <hr />
-      <input type="text" @keyup = "userInput"/>
+      <input type="text" @keyup="userInput" />
       <p>{{ input }}</p>
       <hr />
-      <input type="text" @keyup.enter = "userInputOnEnter"/>
+      <input type="text" @keyup.enter="userInputOnEnter" />
       <p>{{ inputOnEnter }}</p>
     </section>
   </body>
