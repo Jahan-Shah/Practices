@@ -5,17 +5,19 @@ const app = Vue.createApp({
       name: ''
     };
   },
+  computed: {
+    setName() {
+      if (!this.name)
+        return '';
+      return this.name + ' ' + 'Sarfraz';
+    }
+  },
   methods: {
-    setName(event, lastName) {
-      !event.target.value ? 
-      this.name = '' : 
-          this.name = event.target.value+ ' ' + lastName;
-    },
     add(num) {
-      this.counter = this.counter + num;
+      this.counter += num;
     },
     reduce(num) {
-      this.counter = this.counter - num;
+      this.counter -= num;
       // this.counter--;
     }
   }
