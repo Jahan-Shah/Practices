@@ -20,5 +20,6 @@ const assignment2 = Vue.createApp({
                 this.inputOnEnter = event.target.value;
         }
     }
+
 });
 assignment2.mount('#assignment');
