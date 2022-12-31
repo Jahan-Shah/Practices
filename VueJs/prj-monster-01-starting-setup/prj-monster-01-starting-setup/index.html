@@ -17,20 +17,20 @@
       <h1>Monster Slayer</h1>
     </header>
     <div id="game">
-      <section id="monster" class="container">
-        <h2>Monster Health</h2>
-        <div
-          class="healthbar"
-          role="progressbar"
-          :style="monsterHealthBar"
-        ></div>
-      </section>
       <section id="player" class="container">
         <h2>Your Health</h2>
         <div
           class="healthbar"
           role="progressbar"
           :style="playerHealthBar"
+        ></div>
+      </section>
+      <section id="monster" class="container">
+        <h2>Monster Health</h2>
+        <div
+          class="healthbar"
+          role="progressbar"
+          :style="monsterHealthBar"
         ></div>
       </section>
       <section class="container" v-if="winner">
