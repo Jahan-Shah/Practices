@@ -13,7 +13,7 @@
     </template>
   </base-dialog>
   <base-card>
-    <form @submit.prevent="submitData">
+    <form @submit.prevent="submitData" ref="form">
       <div class="form-control">
         <label for="title">Title</label>
         <input id="title" type="text" name="title" ref="titleInput" />
@@ -62,9 +62,7 @@ export default {
       }
       this.addResource(enteredTitle, enteredDesc, enteredURL);
 
-      this.$refs.titleInput.value.reset();
-      this.$refs.descInput.value.reset();
-      this.$refs.linkInput.value.reset();
+      this.$refs.form.reset();
     },
     confirmError() {
       this.inputIsInvalid = false;
