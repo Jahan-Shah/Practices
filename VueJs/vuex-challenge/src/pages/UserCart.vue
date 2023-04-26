@@ -1,10 +1,15 @@
 <template>
-  <section>
+  <section v-if="cartQuantity">
     <h2>Your Cart</h2>
-    <h3>Total Amount: <base-badge mode="elegant">${{ cartTotal }}</base-badge></h3>
+    <h3>
+      Total Amount:
+      <base-badge mode="elegant">${{ cartTotal }}</base-badge>
+      Total Items:
+      <base-badge mode="elegant"> {{ cartQuantity }}</base-badge>
+    </h3>
     <ul>
       <cart-item
-        v-for="item in cart.items"
+        v-for="item in cartItems"
         :key="item.productId"
         :prod-id="item.productId"
         :title="item.title"
@@ -14,21 +19,30 @@
       ></cart-item>
     </ul>
   </section>
+  <section v-else>
+    <h2>Your cart is empty</h2>
+  </section>
 </template>
 
 <script>
-import CartItem from '../components/cart/CartItem.vue';
+import CartItem from "../components/cart/CartItem.vue";
 
 export default {
-  inject: ['cart'],
   components: {
     CartItem,
   },
   computed: {
     cartTotal() {
-      return this.cart.total.toFixed(2);
-    }
-  }
+      let total = this.$store.getters["cart/totalSum"];
+      return total < 0 ? (0).toFixed(2) : total.toFixed(2);
+    },
+    cartItems() {
+      return this.$store.getters["cart/products"];
+    },
+    cartQuantity() {
+      return this.$store.getters["cart/quantity"];
+    },
+  },
 };
 </script>
 
@@ -46,7 +60,7 @@ h2 {
 }
 
 h3 {
- text-align: center;
+  text-align: center;
 }
 
 ul {

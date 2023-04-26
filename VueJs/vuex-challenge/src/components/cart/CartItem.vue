@@ -12,7 +12,9 @@
         </div>
         <div>
           Quantity:
+          <button class="btn" @click="dec">-</button>
           <strong>{{ qty }}</strong>
+          <button class="btn" @click="inc">+</button>
         </div>
       </div>
       <div class="item__total">Total: ${{ itemTotal }}</div>
@@ -23,18 +25,25 @@
 
 <script>
 export default {
-  inject: ['removeProductFromCart'],
-  props: ['prodId', 'title', 'image', 'price', 'qty'],
+  props: ["prodId", "title", "image", "price", "qty"],
   computed: {
     itemTotal() {
       return (this.price * this.qty).toFixed(2);
-    }
+    },
   },
   methods: {
     remove() {
-      this.removeProductFromCart(this.prodId);
-    }
-  }
+      this.$store.dispatch("cart/removeFromCart", { productId: this.prodId });
+    },
+    inc() {
+      this.$store.dispatch("cart/incQty", { productId: this.prodId });
+    },
+    dec() {
+      this.qty <= 1
+        ? this.remove()
+        : this.$store.dispatch("cart/decQty", { productId: this.prodId });
+    },
+  },
 };
 </script>
 
@@ -82,5 +91,16 @@ button:hover,
 button:active {
   background-color: #53001c;
   border-color: #53001c;
+}
+
+.btn {
+  padding: 0.1rem 0.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #a3a3a3;
+}
+
+strong {
+  margin: 0 0.3125rem;
 }
 </style>
