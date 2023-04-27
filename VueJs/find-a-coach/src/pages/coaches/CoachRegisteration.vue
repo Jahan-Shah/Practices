@@ -1,5 +1,5 @@
 <script></script>
 
-<template></template>
+<template>REGISTERATION</template>
 
 <style scoped></style>

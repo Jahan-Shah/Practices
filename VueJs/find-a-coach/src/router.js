@@ -10,13 +10,13 @@ import RequestsReceived from "./pages/requests/RequestsReceived.vue";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', redirect: '/couches' },
-    { path: '/couches', component: CoachesList },
+    { path: '/', redirect: '/coaches' },
+    { path: '/coaches', component: CoachesList },
     {
-      path: '/couches/:id',
+      path: '/coaches/:id',
       component: CoachDetail,
       children: [
-        { path: '/contact', component: ContactCoach },
+        { path: 'contact', component: ContactCoach },
       ]
     },
     { path: '/register', component: CoachRegistration },
