@@ -1,5 +1,5 @@
 <script></script>
 
-<template></template>
+<template>CONTACT COACH</template>
 
 <style scoped></style>
