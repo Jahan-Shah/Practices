@@ -17,13 +17,13 @@ export default {
 <template>
   <section>FILTER</section>
   <section>
-    <base-card>
+    <BaseCard>
       <div class="controls">
-        <base-button mode="outline">Refresh</base-button>
-        <base-button link to="/register">Register as Coach</base-button>
+        <BaseButton mode="outline">Refresh</BaseButton>
+        <BaseButton link to="/register">Register as Coach</BaseButton>
       </div>
       <ul v-if="hasCoaches">
-        <coach-item
+        <CoachItem
           v-for="coach in filteredCoaches"
           :key="coach.id"
           :id="coach.id"
@@ -31,10 +31,10 @@ export default {
           :last-name="coach.lastName"
           :rate="coach.hourlyRate"
           :areas="coach.areas"
-        ></coach-item>
+        ></CoachItem>
       </ul>
       <h3 v-else>No coaches found.</h3>
-    </base-card>
+    </BaseCard>
   </section>
 </template>
 
