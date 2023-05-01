@@ -1,3 +1,51 @@
+<script>
+import RequestItem from "../../components/requests/RequestItem.vue";
+
+export default {
+  computed: {
+    receivedRequests() {
+      return this.$store.getters["requests/requests"];
+    },
+    hasRequests() {
+      return this.$store.getters["reqests/hasRequests"];
+    },
+  },
+  components: { RequestItem },
+};
+</script>
+
 <template>
-  <section>REQUESTS</section>
+  <section>
+    <base-card>
+      <header>
+        <h2>Request Received</h2>
+      </header>
+      <ul v-if="hasRequests">
+        <RequestItem
+          v-for="req in receivedRequests"
+          :key="req.id"
+          :email="req.userEmail"
+          :message="req.message"
+        />
+      </ul>
+      <h3 v-else>You haven't received any request yet!</h3>
+    </base-card>
+  </section>
 </template>
+
+<style scoped>
+header {
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+  margin: 2rem auto;
+  padding: 0;
+  max-width: 30rem;
+}
+
+h3 {
+  text-align: center;
+}
+</style>
