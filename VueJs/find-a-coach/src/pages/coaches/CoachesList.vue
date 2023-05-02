@@ -12,9 +12,15 @@ export default {
       },
     };
   },
+  created() {
+    this.loadCoaches();
+  },
   methods: {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
+    },
+    loadCoaches() {
+      this.$store.dispatch("coaches/loadCoaches");
     },
   },
   computed: {
@@ -46,7 +52,7 @@ export default {
   <section>
     <BaseCard>
       <div class="controls">
-        <BaseButton mode="outline">Refresh</BaseButton>
+        <BaseButton @click="loadCoaches" mode="outline">Refresh</BaseButton>
         <BaseButton v-if="!isCoach" link to="/register"
           >Register as Coach</BaseButton
         >
