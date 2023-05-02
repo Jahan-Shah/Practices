@@ -10,6 +10,7 @@ export default {
         backend: true,
         career: true,
       },
+      isLoading: false,
     };
   },
   created() {
@@ -19,8 +20,10 @@ export default {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
     },
-    loadCoaches() {
-      this.$store.dispatch("coaches/loadCoaches");
+    async loadCoaches() {
+      this.isLoading = true;
+      await this.$store.dispatch("coaches/loadCoaches");
+      this.isLoading = false;
     },
   },
   computed: {
@@ -40,7 +43,7 @@ export default {
       });
     },
     hasCoaches() {
-      return this.$store.getters["coaches/hasCoaches"];
+      return !this.isLoading && this.$store.getters["coaches/hasCoaches"];
     },
   },
   components: { CoachItem, CoachFilter },
@@ -53,11 +56,14 @@ export default {
     <BaseCard>
       <div class="controls">
         <BaseButton @click="loadCoaches" mode="outline">Refresh</BaseButton>
-        <BaseButton v-if="!isCoach" link to="/register"
+        <BaseButton v-if="!isCoach && !isLoading" link to="/register"
           >Register as Coach</BaseButton
         >
       </div>
-      <ul v-if="hasCoaches">
+      <div v-if="isLoading">
+        <BaseSpinner />
+      </div>
+      <ul v-else-if="hasCoaches">
         <CoachItem
           v-for="coach in filteredCoaches"
           :key="coach.id"
