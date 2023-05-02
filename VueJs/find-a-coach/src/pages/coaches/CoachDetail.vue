@@ -49,7 +49,6 @@ export default {
     <BaseCard>
       <header>
         <h2>Interested? Reach out now!</h2>
-        <BaseButton link :to="contactLink">Contact</BaseButton>
       </header>
       <RouterView></RouterView>
     </BaseCard>
