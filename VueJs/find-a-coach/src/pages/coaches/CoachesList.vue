@@ -34,15 +34,6 @@ export default {
       this.error = null;
     },
   },
-  watch: {
-    error(value) {
-      if (value) {
-        document.documentElement.style.overflow = "hidden";
-      } else {
-        document.documentElement.style.overflow = "auto";
-      }
-    },
-  },
   computed: {
     isCoach() {
       return this.$store.getters["coaches/isCoach"];

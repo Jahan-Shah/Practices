@@ -24,6 +24,11 @@ export default {
       this.$emit("close");
     },
   },
+  watch: {
+    show(value) {
+      document.body.style.overflow = value ? "hidden" : "auto";
+    },
+  },
 };
 </script>
 
