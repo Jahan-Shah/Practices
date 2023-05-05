@@ -30,9 +30,15 @@ export default {
     },
   },
   created() {
-    this.selectedCoach = this.$store.getters["coaches/coaches"].find(
-      (coach) => coach.id === this.id
-    );
+    const storedCoach = localStorage.getItem("selectedCoach");
+    if (storedCoach) {
+      this.selectedCoach = JSON.parse(storedCoach);
+    } else {
+      this.selectedCoach = this.$store.getters["coaches/coaches"].find(
+        (coach) => coach.id === this.id
+      );
+      localStorage.setItem("selectedCoach", JSON.stringify(this.selectedCoach));
+    }
   },
 };
 </script>
