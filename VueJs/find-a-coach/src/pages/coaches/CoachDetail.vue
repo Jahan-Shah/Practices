@@ -4,7 +4,13 @@ export default {
   data() {
     return {
       selectedCoach: null,
+      isButtonClicked: false,
     };
+  },
+  methods: {
+    onChildLoaded() {
+      this.isButtonClicked = true;
+    },
   },
   computed: {
     fullName() {
@@ -20,7 +26,7 @@ export default {
       return this.selectedCoach.description;
     },
     contactLink() {
-      return `${this.$route.path}/${this.id}/contact`;
+      return { name: "contact-coach" };
     },
   },
   created() {
@@ -32,25 +38,30 @@ export default {
 </script>
 
 <template>
-  <section>
-    <BaseCard>
-      <h2>{{ fullName }}</h2>
-      <p>{{ description }}</p>
-      <BaseBadge
-        v-for="area in areas"
-        :key="area"
-        :type="area"
-        :title="area"
-      ></BaseBadge>
-      <h3>Fee: ${{ rate }}/hour</h3>
-    </BaseCard>
-  </section>
-  <section>
-    <BaseCard>
-      <header>
-        <h2>Interested? Reach out now!</h2>
-      </header>
-      <RouterView></RouterView>
-    </BaseCard>
-  </section>
+  <div>
+    <section>
+      <BaseCard>
+        <h2>{{ fullName }}</h2>
+        <p>{{ description }}</p>
+        <BaseBadge
+          v-for="area in areas"
+          :key="area"
+          :type="area"
+          :title="area"
+        ></BaseBadge>
+        <h3>Fee: ${{ rate }}/hour</h3>
+      </BaseCard>
+    </section>
+    <section>
+      <BaseCard>
+        <header>
+          <h2>Interested? Reach out now!</h2>
+          <BaseButton v-if="!isButtonClicked" link :to="contactLink">
+            Contact
+          </BaseButton>
+        </header>
+        <RouterView @child-loaded="onChildLoaded"></RouterView>
+      </BaseCard>
+    </section>
+  </div>
 </template>
