@@ -13,10 +13,12 @@ export default {
 </script>
 
 <template>
-  <section>
-    <base-card>
-      <h2>Register as a coach now!</h2>
-      <CoachForm @save-data="saveData" />
-    </base-card>
-  </section>
+  <div>
+    <section>
+      <base-card>
+        <h2>Register as a coach now!</h2>
+        <CoachForm @save-data="saveData" />
+      </base-card>
+    </section>
+  </div>
 </template>

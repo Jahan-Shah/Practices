@@ -38,26 +38,28 @@ export default {
 </script>
 
 <template>
-  <base-dialog :show="!!error" title="An error occured" @close="handleError">
-    <p>{{ error }}</p>
-  </base-dialog>
-  <section>
-    <base-card>
-      <header>
-        <h2>Request Received</h2>
-      </header>
-      <BaseSpinner v-if="isLoading" />
-      <ul v-else-if="hasRequests && !isLoading">
-        <RequestItem
-          v-for="req in receivedRequests"
-          :key="req.id"
-          :email="req.userEmail"
-          :message="req.message"
-        />
-      </ul>
-      <h3 v-else>You haven't received any request yet!</h3>
-    </base-card>
-  </section>
+  <div>
+    <base-dialog :show="!!error" title="An error occured" @close="handleError">
+      <p>{{ error }}</p>
+    </base-dialog>
+    <section>
+      <base-card>
+        <header>
+          <h2>Request Received</h2>
+        </header>
+        <BaseSpinner v-if="isLoading" />
+        <ul v-else-if="hasRequests && !isLoading">
+          <RequestItem
+            v-for="req in receivedRequests"
+            :key="req.id"
+            :email="req.userEmail"
+            :message="req.message"
+          />
+        </ul>
+        <h3 v-else>You haven't received any request yet!</h3>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <style scoped>
