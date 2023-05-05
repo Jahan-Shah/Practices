@@ -21,10 +21,12 @@ export default {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
     },
-    async loadCoaches() {
+    async loadCoaches(refresh = false) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch("coaches/loadCoaches");
+        await this.$store.dispatch("coaches/loadCoaches", {
+          forceRefresh: refresh,
+        });
       } catch (error) {
         this.error = error.message || "Something went wrong!";
       }
@@ -68,10 +70,12 @@ export default {
   <section>
     <BaseCard>
       <div class="controls">
-        <BaseButton @click="loadCoaches" mode="outline">Refresh</BaseButton>
-        <BaseButton v-if="!isCoach && !isLoading" link to="/register"
-          >Register as Coach</BaseButton
-        >
+        <BaseButton @click="loadCoaches(true)" mode="outline">
+          Refresh
+        </BaseButton>
+        <BaseButton v-if="!isCoach && !isLoading" link to="/register">
+          Register as Coach
+        </BaseButton>
       </div>
       <div v-if="isLoading">
         <BaseSpinner />

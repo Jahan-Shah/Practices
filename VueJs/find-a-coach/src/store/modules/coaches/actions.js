@@ -26,7 +26,9 @@ export default {
     });
 
   },
-  async loadCoaches(context) {
+  async loadCoaches(context, payload) {
+    if (!payload.forceRefresh && !context.getters.shouldUpdate) return;
+
     const response = await fetch('https://find-a-coach-2eacc-default-rtdb.firebaseio.com/coaches.json');
     const responseData = await response.json();
 
@@ -48,6 +50,7 @@ export default {
       };
       coaches.push(coach);
       context.commit('setCoaches', coaches);
+      context.commit('setFetchTimeStamp');
     }
   }
 };
