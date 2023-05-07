@@ -6,10 +6,12 @@ export default {
       password: "",
       mode: "login",
       formIsValid: true,
+      isLoading: false,
+      error: null,
     };
   },
   methods: {
-    submitForm() {
+    async submitForm() {
       this.formIsValid = true;
       if (
         this.email === "" ||
@@ -19,17 +21,29 @@ export default {
         this.formIsValid = false;
         return;
       }
+
+      this.isLoading = true;
       // send http request
-      if (this.mode === "login") {
-      } else {
-        this.$store.dispatch("signup", {
-          email: this.email,
-          password: this.password,
-        });
+
+      try {
+        if (this.mode === "login") {
+        } else {
+          await this.$store.dispatch("signup", {
+            email: this.email,
+            password: this.password,
+          });
+        }
+      } catch (err) {
+        this.error = err.message || "Failed to authenticate, try later.";
       }
+
+      this.isLoading = false;
     },
     switchAuth() {
       this.mode = this.mode === "login" ? "signup" : "login";
+    },
+    handleError() {
+      this.error = null;
     },
   },
   computed: {
@@ -44,26 +58,34 @@ export default {
 </script>
 
 <template>
-  <BaseCard>
-    <form @submit.prevent="submitForm">
-      <div class="form-control">
-        <label for="email">E-mail</label>
-        <input type="email" id="email" v-model.trim="email" />
-      </div>
-      <div class="form-control">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model.trim="password" />
-      </div>
-      <p v-if="!formIsValid">
-        Please enter a valid email and password (must be atleast 6 characters
-        long).
-      </p>
-      <BaseButton>{{ submitButtonCaption }}</BaseButton>
-      <BaseButton @click="switchAuth" type="button" mode="flat">
-        {{ switchModeCaption }}
-      </BaseButton>
-    </form>
-  </BaseCard>
+  <div>
+    <base-dialog :show="!!error" title="An error occurred" @close="handleError">
+      <p>{{ error }}</p>
+    </base-dialog>
+    <base-dialog title="Authenticating..." :show="isLoading" fixed>
+      <BaseSpinner />
+    </base-dialog>
+    <BaseCard>
+      <form @submit.prevent="submitForm">
+        <div class="form-control">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" v-model.trim="email" />
+        </div>
+        <div class="form-control">
+          <label for="password">Password</label>
+          <input type="password" id="password" v-model.trim="password" />
+        </div>
+        <p v-if="!formIsValid">
+          Please enter a valid email and password (must be atleast 6 characters
+          long).
+        </p>
+        <BaseButton>{{ submitButtonCaption }}</BaseButton>
+        <BaseButton @click="switchAuth" type="button" mode="flat">
+          {{ switchModeCaption }}
+        </BaseButton>
+      </form>
+    </BaseCard>
+  </div>
 </template>
 
 <style scoped>
