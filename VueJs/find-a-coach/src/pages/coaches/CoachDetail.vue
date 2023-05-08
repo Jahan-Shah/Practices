@@ -11,6 +11,9 @@ export default {
     onChildLoaded() {
       this.isButtonClicked = true;
     },
+    onChildUnmounted() {
+      this.isButtonClicked = false;
+    },
   },
   computed: {
     fullName() {
@@ -66,7 +69,10 @@ export default {
             Contact
           </BaseButton>
         </header>
-        <RouterView @child-loaded="onChildLoaded"></RouterView>
+        <RouterView
+          @child-unmounted="onChildUnmounted"
+          @child-loaded="onChildLoaded"
+        ></RouterView>
       </BaseCard>
     </section>
   </div>

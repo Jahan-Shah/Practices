@@ -29,8 +29,16 @@ export default {
       this.$router.replace("/coaches");
     },
   },
+  computed: {
+    cancel() {
+      return { name: "coach-detail" };
+    },
+  },
   mounted() {
     this.$emit("child-loaded");
+  },
+  unmounted() {
+    this.$emit("child-unmounted");
   },
 };
 </script>
@@ -50,6 +58,7 @@ export default {
         Please enter a valid email and non-empty message
       </p>
       <div class="actions">
+        <base-button mode="outline" link :to="cancel">Cancel</base-button>
         <base-button>Send Message</base-button>
       </div>
     </form>
