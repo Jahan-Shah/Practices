@@ -23,21 +23,23 @@ export default {
       }
 
       this.isLoading = true;
+
+      const actionPayload = {
+        email: this.email,
+        password: this.password,
+      };
       // send http request
 
       try {
-        if (this.mode === "login") {
-        } else {
-          await this.$store.dispatch("signup", {
-            email: this.email,
-            password: this.password,
-          });
-        }
+        await this.$store.dispatch(this.checkMode(), actionPayload);
       } catch (err) {
         this.error = err.message || "Failed to authenticate, try later.";
       }
 
       this.isLoading = false;
+    },
+    checkMode() {
+      return this.mode === "login" ? "login" : "signup";
     },
     switchAuth() {
       this.mode = this.mode === "login" ? "signup" : "login";
@@ -48,7 +50,7 @@ export default {
   },
   computed: {
     submitButtonCaption() {
-      return this.mode === "login" ? "Login" : "Signup";
+      return this.checkMode();
     },
     switchModeCaption() {
       return this.mode === "login" ? "Signup instead" : "Login instead";
