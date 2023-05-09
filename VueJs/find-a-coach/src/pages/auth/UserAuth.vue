@@ -32,6 +32,8 @@ export default {
 
       try {
         await this.$store.dispatch(this.checkMode(), actionPayload);
+        const redirectUrl = `/${this.$route.query.redirect || "couches"}`;
+        this.$router.replace(redirectUrl);
       } catch (err) {
         this.error = err.message || "Failed to authenticate, try later.";
       }

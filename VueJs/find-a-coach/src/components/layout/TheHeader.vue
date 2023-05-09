@@ -1,10 +1,34 @@
+<script>
+export default {
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isAuthenticated;
+    },
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+      this.$router.replace("/");
+    },
+  },
+};
+</script>
+
 <template>
   <header>
     <nav>
       <h1><routerLink to="/">Find a Coach</routerLink></h1>
       <ul>
         <li><routerLink to="/coaches">All Coaches</routerLink></li>
-        <li><routerLink to="/requests">Requests</routerLink></li>
+        <li v-if="isLoggedIn">
+          <routerLink to="/requests">Requests</routerLink>
+        </li>
+        <li v-else>
+          <routerLink to="/auth">Login</routerLink>
+        </li>
+        <li v-if="isLoggedIn">
+          <BaseButton @click="logout">Logout</BaseButton>
+        </li>
       </ul>
     </nav>
   </header>

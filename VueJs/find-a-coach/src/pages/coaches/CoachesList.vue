@@ -53,6 +53,9 @@ export default {
     hasCoaches() {
       return !this.isLoading && this.$store.getters["coaches/hasCoaches"];
     },
+    isLoggedIn() {
+      return this.$store.getters.isAuthenticated;
+    },
   },
   components: { CoachItem, CoachFilter },
 };
@@ -76,7 +79,14 @@ export default {
           <BaseButton @click="loadCoaches(true)" mode="outline">
             Refresh
           </BaseButton>
-          <BaseButton v-if="!isCoach && !isLoading" link to="/register">
+          <BaseButton v-if="!isLoggedIn" link to="/auth?redirect=register">
+            Login to Register as Coach
+          </BaseButton>
+          <BaseButton
+            v-if="isLoggedIn && !isCoach && !isLoading"
+            link
+            to="/register"
+          >
             Register as Coach
           </BaseButton>
         </div>
