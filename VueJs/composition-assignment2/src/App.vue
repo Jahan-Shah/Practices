@@ -19,60 +19,29 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import { computed, reactive, watch } from "vue";
 
-export default {
-  setup() {
-    const availableFunds = 100;
-    const fundData = reactive({
-      currentExpenses: 0,
-      enteredExpense: 0,
-    });
-    function addExpense() {
-      fundData.currentExpenses += fundData.enteredExpense;
-    }
-    const remainingFunds = computed(function () {
-      return availableFunds - fundData.currentExpenses;
-    });
-    watch(remainingFunds, function (val) {
-      if (val < 0) {
-        alert("You're broke");
-      }
-    });
+const availableFunds = 100;
 
-    return {
-      availableFunds,
-      remainingFunds,
-      addExpense,
-      fundData,
-    };
-  },
-  // data() {
-  //   return {
-  //     availableFunds: 100,
-  //     currentExpenses: 0,
-  //     enteredExpense: 0,
-  //   };
-  // },
-  // computed: {
-  //   remainingFunds() {
-  //     return this.availableFunds - this.currentExpenses;
-  //   },
-  // },
-  // methods: {
-  //   addExpense() {
-  //     this.currentExpenses += this.enteredExpense;
-  //   },
-  // },
-  // watch: {
-  //   remainingFunds(val) {
-  //     if (val < 0) {
-  //       alert('You are broke!');
-  //     }
-  //   },
-  // },
-};
+const fundData = reactive({
+  currentExpenses: 0,
+  enteredExpense: 0,
+});
+
+function addExpense() {
+  fundData.currentExpenses += fundData.enteredExpense;
+}
+
+const remainingFunds = computed(function () {
+  return availableFunds - fundData.currentExpenses;
+});
+
+watch(remainingFunds, function (val) {
+  if (val < 0) {
+    alert("You're broke");
+  }
+});
 </script>
 
 <style>
